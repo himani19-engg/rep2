@@ -1,0 +1,19 @@
+# Default ignored files
+.settings/*
+SavedTestExecutionReports/*
+.classpath.orig
+debug.log
+.project
+debug.log.orig
+*.html
+pom.xml.orig
+TestFile.txt
+testng.xml
+testng.xml.orig
+*.orig
+test-output/*
+
+
+
+/target/
+/bin/

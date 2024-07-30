@@ -1,0 +1,218 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 100663296 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3466), pid=20332, tid=22520
+#
+# JRE version:  (16.0+36) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (16+36-2231, mixed mode, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -ea -Dfile.encoding=Cp1252 -XX:+ShowCodeDetailsInExceptionMessages org.testng.remote.RemoteTestNG -serport 57508 -protocol json -d C:\Users\nazine\Namrata\SOL\Automation\QADC_Functionnal_Automated_Tests\NamrataProject\test-output C:\Users\nazine\Namrata\SOL\Automation\QADC_Functionnal_Automated_Tests\NamrataProject\testngsolretailIHM_ES.xml
+
+Host: AMD Ryzen 5 PRO 3500U w/ Radeon Vega Mobile Gfx, 8 cores, 5G,  Windows 10 , 64 bit Build 19041 (10.0.19041.1466)
+Time: Fri Feb  4 17:00:17 2022 India Standard Time elapsed time: 0.067935 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000019b9e14ed00):  JavaThread "Unknown thread" [_thread_in_vm, id=22520, stack(0x000000193d500000,0x000000193d600000)]
+
+Stack: [0x000000193d500000,0x000000193d600000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6681da]
+V  [jvm.dll+0x7c9d99]
+V  [jvm.dll+0x7cb4d3]
+V  [jvm.dll+0x7cbb33]
+V  [jvm.dll+0x242ee5]
+V  [jvm.dll+0x664f99]
+V  [jvm.dll+0x659b85]
+V  [jvm.dll+0x2fbfcb]
+V  [jvm.dll+0x3031c6]
+V  [jvm.dll+0x352a0e]
+V  [jvm.dll+0x352c3f]
+V  [jvm.dll+0x2d3038]
+V  [jvm.dll+0x2d4274]
+V  [jvm.dll+0x79c691]
+V  [jvm.dll+0x3607b1]
+V  [jvm.dll+0x77a370]
+V  [jvm.dll+0x3e501f]
+V  [jvm.dll+0x3e6af1]
+C  [jli.dll+0x52fb]
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17034]
+C  [ntdll.dll+0x52651]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffdb23ecbb8, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x0000019b9e185080 GCTaskThread "GC Thread#0" [stack: 0x000000193d600000,0x000000193d700000] [id=13764]
+  0x0000019b9e191ec0 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000193d700000,0x000000193d800000] [id=11316]
+  0x0000019b9e1934a0 ConcurrentGCThread "G1 Conc#0" [stack: 0x000000193d800000,0x000000193d900000] [id=9600]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffdb1bc3ef7]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x0000019b9e148d30] Heap_lock - owner thread: 0x0000019b9e14ed00
+
+Heap address: 0x00000000a1000000, size: 1520 MB, Compressed Oops mode: 32-bit
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 0.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x00000000a1000000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffdb1fa1edd]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (1 events):
+Event: 0.043 Loaded shared library C:\Program Files\Java\jdk-16\bin\java.dll
+
+
+Dynamic libraries:
+0x00007ff77d160000 - 0x00007ff77d170000 	C:\Program Files\Java\jdk-16\bin\javaw.exe
+0x00007ffdfb3d0000 - 0x00007ffdfb5c5000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffdf99f0000 - 0x00007ffdf9aae000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffdf8cc0000 - 0x00007ffdf8f88000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffdf92e0000 - 0x00007ffdf93e0000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffdef490000 - 0x00007ffdef4a9000 	C:\Program Files\Java\jdk-16\bin\VCRUNTIME140.dll
+0x00007ffde4e90000 - 0x00007ffde4ea8000 	C:\Program Files\Java\jdk-16\bin\jli.dll
+0x00007ffdfb260000 - 0x00007ffdfb30e000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffdf9410000 - 0x00007ffdf94ae000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffdf9590000 - 0x00007ffdf962c000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffdf9640000 - 0x00007ffdf9765000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffdf9840000 - 0x00007ffdf99e1000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffdf93e0000 - 0x00007ffdf9402000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffde0080000 - 0x00007ffde031a000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e\COMCTL32.dll
+0x00007ffdf9560000 - 0x00007ffdf958b000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffdf9070000 - 0x00007ffdf917d000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffdf8c20000 - 0x00007ffdf8cbd000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffdf2de0000 - 0x00007ffdf2dea000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffdfa010000 - 0x00007ffdfa040000 	C:\WINDOWS\System32\IMM32.DLL
+0x0000019b9e0b0000 - 0x0000019b9e0c3000 	C:\WINDOWS\System32\umppc14705.dll
+0x00007ffdf8800000 - 0x00007ffdf8924000 	C:\Program Files\Avecto\Privilege Guard Client\PGHook.dll
+0x00007ffdfa100000 - 0x00007ffdfa844000 	C:\WINDOWS\System32\shell32.dll
+0x00007ffdf8730000 - 0x00007ffdf8748000 	C:\WINDOWS\SYSTEM32\CRYPTSP.dll
+0x00007ffdf86f0000 - 0x00007ffdf8724000 	C:\WINDOWS\system32\rsaenh.dll
+0x00007ffdf8f90000 - 0x00007ffdf8fb7000 	C:\WINDOWS\System32\bcrypt.dll
+0x00007ffdf86e0000 - 0x00007ffdf86ec000 	C:\WINDOWS\SYSTEM32\CRYPTBASE.dll
+0x00007ffdf8b30000 - 0x00007ffdf8bb2000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffdf4460000 - 0x00007ffdf446c000 	C:\Program Files\Java\jdk-16\bin\vcruntime140_1.dll
+0x00007ffdc9660000 - 0x00007ffdc96f1000 	C:\Program Files\Java\jdk-16\bin\msvcp140.dll
+0x00007ffdb18e0000 - 0x00007ffdb248b000 	C:\Program Files\Java\jdk-16\bin\server\jvm.dll
+0x00007ffdf9630000 - 0x00007ffdf9638000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffde2ed0000 - 0x00007ffde2ed9000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffdfaf90000 - 0x00007ffdfaffb000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffdeb730000 - 0x00007ffdeb757000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffdf7230000 - 0x00007ffdf7242000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffdef4c0000 - 0x00007ffdef4ca000 	C:\Program Files\Java\jdk-16\bin\jimage.dll
+0x00007ffdf5e90000 - 0x00007ffdf6074000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffded0e0000 - 0x00007ffded10c000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffdd1270000 - 0x00007ffdd1295000 	C:\Program Files\Java\jdk-16\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-16\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e;C:\Program Files\Avecto\Privilege Guard Client;C:\Program Files\Java\jdk-16\bin\server
+
+VM Arguments:
+jvm_args: -ea -Dfile.encoding=Cp1252 -XX:+ShowCodeDetailsInExceptionMessages 
+java_command: org.testng.remote.RemoteTestNG -serport 57508 -protocol json -d C:\Users\nazine\Namrata\SOL\Automation\QADC_Functionnal_Automated_Tests\NamrataProject\test-output C:\Users\nazine\Namrata\SOL\Automation\QADC_Functionnal_Automated_Tests\NamrataProject\testngsolretailIHM_ES.xml
+java_class_path (initial): C:\Users\nazine\eclipse\jee-2021-09\eclipse\configuration\org.eclipse.osgi\936\0\.cp\lib\testng-remote.jar;C:\Users\nazine\Namrata\SOL\Automation\QADC_Functionnal_Automated_Tests\NamrataProject\target\test-classes;C:\Users\nazine\Namrata\SOL\Automation\QADC_Functionnal_Automated_Tests\NamrataProject\target\classes;C:\Users\nazine\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;C:\Users\nazine\.m2\repository\org\apache\maven\plugins\maven-surefire-plugin\3.0.0-M5\maven-surefire-plugin-3.0.0-M5.jar;C:\Users\nazine\.m2\repository\org\apache\maven\surefire\maven-surefire-common\3.0.0-M5\maven-surefire-common-3.0.0-M5.jar;C:\Users\nazine\.m2\repository\org\apache\maven\surefire\surefire-api\3.0.0-M5\surefire-api-3.0.0-M5.jar;C:\Users\nazine\.m2\repository\org\apache\maven\surefire\surefire-logger-api\3.0.0-M5\surefire-logger-api-3.0.0-M5.jar;C:\Users\nazine\.m2\repository\org\apache\maven\surefire\surefire-extensions-api\3.0.0-M5\surefire-extensions-api-3.0.0-M5.jar;C:\Users\nazine\.m2\repository\org\apache\maven\surefire\surefire-booter\3.0.0-M5\surefire-booter-3.0.0-M5.jar;C:\Users\nazine\.m2\repository\org\apache\maven\surefire\surefire-extensions-spi\3.0.0-M5\surefire-extensions-spi-3.0.0-M5.jar;C:\Users\nazine\.m2\repository\org\apache\maven\maven-toolchain\3.0-alpha-2\maven-toolchain-3.0-alpha-2.jar;C:\Users\nazine\.m2\repository\org\apache\maven\shared\maven-artifact-transfer\0.11.0\maven-artifact-transfer-0.11.0.jar;C:\Users\nazine\.m2\repository\org\apache\maven\shared\maven-common-artifact-filters\3.0.1\maven-common-artifact-filters-3.0.1.jar;C:\Users\nazine\.m2\repository\org\apache\maven\maven-model\3.0\maven-model-3.0.jar;C:\Users\nazine\.m2\repository\org\apache\maven\maven-plugin-api\3.0\maven-plugin-api-3.0.jar;C:\Users\nazine\.m2\repository\org\sonatype\sisu\sisu-inject-plexus\1.4.2\sisu-inject-plexus-1.4.2.jar;C:\Users\nazine\.m2\repository\org\codehaus\plexus\plexus-classworlds\2.2.3\plexus-classworlds-2.2.3.jar;C:\Users\n
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 100663296                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 1593835520                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool ShowCodeDetailsInExceptionMessages       = true                                   {manageable} {command line}
+   size_t SoftMaxHeapSize                          = 1593835520                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=C:\apache-maven-3.8.4\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Eclipse Foundation\jdk-11.0.12.7-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseGit\bin;C:\Users\nazine\AppData\Local\Microsoft\WindowsApps;C:\Users\nazine\AppData\Local\Programs\Git\cmd
+USERNAME=nazine
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.1466)
+OS uptime: 8 days 5:56 hours
+
+CPU: total 8 (initial active 8) (8 cores per cpu, 2 threads per core) family 23 model 24 stepping 1 microcode 0x0, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt
+
+Memory: 4k page, system-wide physical 6077M (270M free)
+TotalPageFile size 24509M (AvailPageFile size 96M)
+current process WorkingSet (physical memory assigned to process): 11M, peak: 11M
+current process commit charge ("private bytes"): 60M, peak: 156M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (16+36-2231) for windows-amd64 JRE (16+36-2231), built on Feb  8 2021 11:43:10 by "mach5one" with MS VC++ 16.7 (VS2019)
+
+END.
