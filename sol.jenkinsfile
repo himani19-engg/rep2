@@ -1,0 +1,116 @@
+pipeline {
+    agent any
+    options { 
+        skipDefaultCheckout()
+	    disableConcurrentBuilds()
+	}
+
+    stages {
+        stage("Clean-workspace") {
+	        steps {
+				// delete workspace
+				cleanWs()
+                // remove Exited container and images with no tag
+                sh '''
+                    df
+
+                    [ -z "$(docker ps -a|grep Exit|cut -d' ' -f1)" ] \
+                      && echo "nothing to do, empty exited container list" \
+                      || docker ps -a|grep Exit|cut -d' ' -f1|xargs docker rm
+
+                    [ -z "$(docker images|grep none|sed -e 's/  */,/g'|cut -d',' -f3)" ] \
+                      && echo "nothing to do, empty none container image list" \
+                      || docker images|grep none|sed -e 's/  */,/g'|cut -d',' -f3|xargs docker rmi || echo "some images remain"
+                    
+                '''
+	        }
+        }   
+        stage('Robot-Checkout') { 
+			steps {
+			    // git checkout to jenkins job workspace/deploy, shallow mode to extract without historic (performance enhancement)
+				withCredentials([
+            			usernamePassword(credentialsId: "${env.MY_GIT_AUTH_ID}", usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_TOKEN'),
+        			]) {
+                    sh '''
+                        git clone --quiet --depth 1 --branch ${MY_GIT_BRANCH} --single-branch https://${GIT_TOKEN}@github.com/D4UDigitalPlatform/QADC_Functionnal_Automated_Tests.git deploy/qadc
+                    '''
+        		}
+			}
+	   }
+       
+        stage('Robot-Run SOL Tests') {
+            steps {
+                sh '''
+                    mkdir results
+                    docker run \
+                        --rm \
+                        --volume "${WORKSPACE}/deploy/qadc":/home/jenkins \
+                        --volume "${WORKSPACE}/results":/home/jenkins/to_jenkins \
+                        --env WORKSPACE=/home/jenkins \
+                        --env HOST_UID=1000 \
+						--env HOST_GID=1000 \
+                        --name ${BUILD_TAG} \
+                        stellantis/sol:1.0.0 \
+                        SOL/${MY_TEST_CASE}
+                '''                
+            }
+        }
+    }
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'results/*.xml'   
+            script{
+                zip archive: true, dir: 'results', glob: '', zipFile: 'results.zip'
+            }    
+        }
+        success {
+            echo "Success: Good job!"
+            script {    
+				// compose email notification sends to requester user email whith XL files in attach
+				def subject = "SUCCESSFUL: Notification automatique - '${JOB_NAME} [${BUILD_NUMBER}]'"
+				def body = """Bonjour 
+
+Veuillez trouver en pièce jointe la liste des tâches effectuées par l'automate ${BUILD_TAG}
+
+Bien cordialement
+
+Automate Jerry
+${BUILD_URL}
+"""
+				emailext (
+					subject: subject,
+					body: body,
+					attachmentsPattern: 'results.zip',
+					recipientProviders: [[$class: 'RequesterRecipientProvider']],
+					to: "${C1RST_user_email}"
+				)
+			}
+        }        
+        failure {            
+            echo 'Failure: Something went wrong with the Provar ANT build. Printing environment for debugging'            
+            script {
+				def subject = "FAILURE: Notification automatique - '${JOB_NAME} [${BUILD_NUMBER}]'"
+				def body = """Bonjour 
+
+Veuillez trouver en pièce jointe la liste des tâches effectuées par l'automate ${BUILD_TAG}
+
+Il y a eu des problèmes
+
+Bien cordialement
+
+Automate Jerry
+${BUILD_URL}
+"""
+				emailext (
+					subject: subject,
+					body: body,
+					attachmentsPattern: 'results.zip',
+					attachLog : true,
+					recipientProviders: [[$class: 'RequesterRecipientProvider']],
+                    to: "${C1RST_user_email}"
+				)
+			}
+
+        }        
+    }  
+}

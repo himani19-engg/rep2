@@ -1,0 +1,108 @@
+pipeline {
+    agent {
+        label 'agent-sol'
+    }
+    options { 
+        skipDefaultCheckout()
+	    //disableConcurrentBuilds()
+	}
+    stages {
+        stage("Clean-workspace") {
+	        steps {
+				// delete workspace
+				cleanWs()
+	        }
+        }
+        stage('QADC-Checkout') {
+            steps {
+                // git checkout to jenkins job workspace/deploy, shallow mode to extract without historic (performance enhancement)
+                // checkout only on branch
+                withCredentials([
+            			usernamePassword(credentialsId: "${env.MY_GIT_AUTH_ID}", usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_TOKEN'),
+        			]) {
+                    sh '''
+                        git clone \
+                            --quiet \
+                            --depth 1 \
+                            --branch ${MY_GIT_BRANCH} \
+                            --single-branch \
+                            https://${GIT_TOKEN}@github.com/D4UDigitalPlatform/QADC_Functionnal_Automated_Tests.git \
+                            $(pwd)
+                    '''
+        		}
+            }
+        }
+        stage('SOL-Launch TestNG Tests') {
+            steps {
+                sh '''
+                    whoami && cd SOL && pwd && google-chrome --version && java -version && chromedriver --version
+                    xvfb-run \
+                      --server-args="-screen 0 1920x1080x24" \
+                      mvn clean test -Dsurefire.suiteXmlFiles=${MY_TEST_CASE}
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                echo "Zipping..."
+                zip archive: true, dir: '', glob: 'SOL/target/surefire-reports/**, SOL/target/test-output/**, SOL/test-output/**', zipFile: "${BUILD_TAG}.zip"
+            }
+            script {
+                echo "Archiving..."
+				archiveArtifacts artifacts: "${BUILD_TAG}.zip", allowEmptyArchive: true
+            }  
+            withAWS(credentials: 'ccr', region: 'eu-west-1') {
+                echo "Publishing to S3 Bucket..."
+                s3Upload acl: 'Private', bucket: 'bucket-qaa-psa-test', file: "${BUILD_TAG}.zip"
+            }  
+        }
+        success {
+            echo "Success: Good job!"
+            script {    
+				// compose email notification sends to requester user email whith XL files in attach
+				def subject = "SUCCESSFUL: Notification automatique - '${JOB_NAME} [${BUILD_NUMBER}]'"
+				def body = """Bonjour 
+
+Veuillez trouver en pièce jointe la liste des tâches effectuées par l'automate ${BUILD_TAG}
+
+Bien cordialement
+
+Automate Jerry
+${BUILD_URL}
+"""
+				emailext (
+					subject: subject,
+					body: body,
+					attachmentsPattern: "${BUILD_TAG}.zip",
+					to: "${SOL_user_email}"
+				)
+			}
+        }        
+        failure {            
+            echo 'Failure: Something went wrong. '   
+            script {
+				def subject = "FAILURE: Notification automatique - '${JOB_NAME} [${BUILD_NUMBER}]'"
+				def body = """Bonjour 
+
+Veuillez trouver en pièce jointe la liste des tâches effectuées par l'automate ${BUILD_TAG}
+
+Il y a eu des problèmes
+
+Bien cordialement
+
+Automate Jerry
+${BUILD_URL}
+"""
+				emailext (
+					subject: subject,
+					body: body,
+					attachmentsPattern: "${BUILD_TAG}.zip",
+					attachLog : true,
+                    to: "${SOL_user_email}"
+				)
+			}         
+        }        
+    }  
+}
